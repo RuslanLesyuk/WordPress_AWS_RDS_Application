@@ -204,7 +204,7 @@ docker-compose up -d
 - Wait a few minutes...
 
 #### Use your AWS EC2 Instance `Public_IP` in your browser and install your first ``WordPress`` page
-###### You can also use AWS Load Balancer end point to becouse this page is working with him
+###### You can also use AWS Load Balancer end point too, becouse this page is working with him
 
 - Find your endpoint in EC2 Services in AWS Console
 - Click on the left column Load Balancer
