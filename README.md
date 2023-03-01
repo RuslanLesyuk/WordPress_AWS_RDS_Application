@@ -125,6 +125,13 @@ resource "aws_key_pair" "master-key" {
 }
 ```
 - Rename `terraform.pub` to your new generated ssh-key `example.pub`
+- You can also use local environment variables commands like this:
+```sh
+AWS_ACCES_KEY_ID="anaccesskey"
+
+AWS_SECRET_ACCESS_KEY="asecretkey"
+```
+- Then you will no need to make changes in `main.tf` with `public_key =`
 - At last make a few commands in `WordPress_AWS_RDS_Application` directory:
 ```sh
 terraform init
@@ -137,16 +144,18 @@ terraform apply (when it asked to type "yes", just type fingerprint "yes")
 
 - Go to the Ansible directory
 - Open hosts.ini looks like this:
-
+```sh
 [myserver]
 Ubuntu ansible_host=`your_aws_public_ip` ansible_user=`your_user` ansible_ssh_private_key_file=`path_to_your_ansible_ssh_key`
-
+```
 - Make some changes
 - Put into `your_aws_public_ip` your ``public ip`` from AWS Instance you can find it in EC2 services
 - Put into `your_user` username `Ubuntu`
-- Put into `path_to_your_ansible_ssh_key` the pass we was just created  `/home/your_user_name/WordPress_AWS_RDS_Application/addons/example.pub`
+- Put into `path_to_your_ansible_ssh_private_key` the pass we was just created  `/home/your_user_name/WordPress_AWS_RDS_Application/addons/example`
 - Close hosts.ini
 - And make a command:
+
+
 ```sh
 ansible-playbook ansible-playbook.yml
 ```
