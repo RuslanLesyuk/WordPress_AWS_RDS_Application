@@ -176,13 +176,26 @@ cd awesome-compose/wordpress-mysql/
 ```
 - Open with `nano` editor `compose.yaml`
 - And we will make some changes in this file
-- Find there `- WORDPRESS_DB_HOST=`
-- Paste there your RDS server end point
-- Where to find:
+- Find there and make values like in my description: 
+```sh
+image: wordpress:latest
+    ports:
+      - 80:80
+    restart: always
+    environment:
+      - WORDPRESS_DB_HOST="your_aws_rds_end_point"
+      - WORDPRESS_DB_USER=codica
+      - WORDPRESS_DB_PASSWORD=rOYdrOlIAntR
+      - WORDPRESS_DB_NAME=wordpress
+volumes:
+  db_data:
+```
+
+- Where to find `your_aws_rds_end_point`:
 
 In your AWS Console find Service RDS launch him, then click `Databases` on left top corner, then shose your database `terraform-bla-bla-bla` and in field `Connectivity & security` find first column with name `Endpoint & port` and copy `terraform-bla-bla-bla-bla.ccmbkhuwukdj.eu-west-3.rds.amazonaws.com`
 
-- Paste your just copied `End Point` to your `- WORDPRESS_DB_HOST=`
+- Paste your just copied `End Point` to your `- WORDPRESS_DB_HOST="your_aws_rds_end_point"`
 - Save and close file
 - Make a command:
 ```sh
@@ -191,5 +204,10 @@ docker-compose up -d
 - Wait a few minutes...
 
 #### Use your AWS EC2 Instance `Public_IP` in your browser and install your first ``WordPress`` page
+###### You can also use AWS Load Balancer end point to becouse this page is working with him
+
+- Find your endpoint in EC2 Services in AWS Console
+- Click on the left column Load Balancer
+- Click on `my-alb` and copy `DNS name` this will be your end point, then paste it to your browser.   
 
 ## Good luck hope you made it :)
