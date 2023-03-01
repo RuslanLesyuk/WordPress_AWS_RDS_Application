@@ -127,9 +127,9 @@ resource "aws_key_pair" "master-key" {
 - Rename `terraform.pub` to your new generated ssh-key `example.pub`
 - At last make a few commands in `WordPress_AWS_RDS_Application` directory:
 ```sh
-Terraform init
-Terraform plan 
-Terraform apply (when it asked to type "yes", just type fingerprint "yes")
+terraform init
+terraform plan 
+terraform apply (when it asked to type "yes", just type fingerprint "yes")
 ```
 ### Whait a few minutes your AWS account configure the EC2 Instance and RDS Instance 
 
