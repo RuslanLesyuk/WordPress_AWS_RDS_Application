@@ -7,7 +7,8 @@
     - name: Update apt cache
       apt:
         update_cache: yes
-
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    
     - name: Install dependencies
       apt:
         name: "{{ item }}"
@@ -19,22 +20,25 @@
         - curl
         - gnupg
         - lsb-release
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'  
 
     - name: Add Docker GPG key
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
     - name: Add Docker repository
       apt_repository:
         repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
         state: present
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
     - name: Install Docker
       apt:
         name: docker-ce
         state: present
-
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
     #- name: Add Docker Compose GPG key
     #  apt_key:
     #    url: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xF3D9D21B1D92B413
@@ -44,8 +48,67 @@
       shell: sudo curl -L "https://github.com/docker/compose/releases/download/v2.12.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/bin/docker-compose
       args:
         creates: /usr/local/bin/docker-compose
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'  
   
     - name: Set Docker Compose permissions
       file:
         path: /usr/bin/docker-compose
-        mode: 'a+x'    
+        mode: 'a+x'
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+
+
+
+
+
+    - name: Update apt cache
+      yum:
+        update_cache: yes
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+    
+    - name: Install dependencies
+      yum:
+        name: "{{ item }}"
+        state: present
+        cache_valid_time: 3600
+      loop:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg
+        - lsb-release
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+    - name: Add Docker repository
+      yum_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
+        state: present
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+    - name: Install Docker
+      yum:
+        name: docker-ce
+        state: present
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+    #- name: Add Docker Compose GPG key
+    #  apt_key:
+    #    url: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xF3D9D21B1D92B413
+    #    state: present
+
+    - name: Install Docker Compose
+      shell: sudo curl -L "https://github.com/docker/compose/releases/download/v2.12.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/bin/docker-compose
+      args:
+        creates: /usr/local/bin/docker-compose
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'  
+  
+    - name: Set Docker Compose permissions
+      file:
+        path: /usr/bin/docker-compose
+        mode: 'a+x'
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'      
