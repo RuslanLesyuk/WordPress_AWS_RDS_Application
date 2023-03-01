@@ -128,8 +128,8 @@ resource "aws_key_pair" "master-key" {
 - At last make a few commands in `WordPress_AWS_RDS_Application` directory:
 ```sh
 Terraform init
-Terraform Plan 
-Terraform Apply (when it asked to type "yes", just type fingerprint "yes")
+Terraform plan 
+Terraform apply (when it asked to type "yes", just type fingerprint "yes")
 ```
 ### Whait a few minutes your AWS account configure the EC2 Instance and RDS Instance 
 
